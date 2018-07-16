@@ -48,5 +48,47 @@ public class RandomController {
             model.put("template", "nameGenerator.vtl");
             return new ModelAndView(model, "layout.vtl");
         }, velocityTemplateEngine);
+
+        get("/random_name/female/first+last", (req, res) -> {
+            ArrayList<String> names = new ArrayList<>();
+            names.add(RandomSelector.getRandomEntry(femaleFirstNames) + " " + RandomSelector.getRandomEntry(lastNames));
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("names",names);
+            model.put("template", "nameGenerator.vtl");
+            return new ModelAndView(model, "layout.vtl");
+        }, velocityTemplateEngine);
+
+        get("/random_name/male/first+last", (req, res) -> {
+            ArrayList<String> names = new ArrayList<>();
+            names.add(RandomSelector.getRandomEntry(maleFirstNames) + " " + RandomSelector.getRandomEntry(lastNames));
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("names",names);
+            model.put("template", "nameGenerator.vtl");
+            return new ModelAndView(model, "layout.vtl");
+        }, velocityTemplateEngine);
+
+        get("/random_name/male/first+last/:numberOfNames", (req, res) -> {
+            ArrayList<String> names = new ArrayList<>();
+            Integer numberOfNames = Integer.parseInt(req.params(":numberOfNames"));
+            for(int i = 0; i < numberOfNames; ++i) {
+                names.add(RandomSelector.getRandomEntry(maleFirstNames) + " " + RandomSelector.getRandomEntry(lastNames));
+            }
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("names",names);
+            model.put("template", "nameGenerator.vtl");
+            return new ModelAndView(model, "layout.vtl");
+        }, velocityTemplateEngine);
+
+        get("/random_name/female/first+last/:numberOfNames", (req, res) -> {
+            ArrayList<String> names = new ArrayList<>();
+            Integer numberOfNames = Integer.parseInt(req.params(":numberOfNames"));
+            for(int i = 0; i < numberOfNames; ++i) {
+                names.add(RandomSelector.getRandomEntry(femaleFirstNames) + " " + RandomSelector.getRandomEntry(lastNames));
+            }
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("names",names);
+            model.put("template", "nameGenerator.vtl");
+            return new ModelAndView(model, "layout.vtl");
+        }, velocityTemplateEngine);
     }
 }
